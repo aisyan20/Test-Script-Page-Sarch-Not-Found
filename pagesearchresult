@@ -1,0 +1,140 @@
+*** Settings ***
+Library  SeleniumLibrary
+Test Teardown  Close Browser
+
+*** Variables ***
+${BUTTON_LOGIN}  //div[@class='text-red text-600']
+${WORDING_MASUK}  //div[@class='el-center flex-col']
+${INFO_BISNISBLANJA}  //body//div[@class='layout row wrap']//div[@class='layout row wrap']//div[1]
+${SYARAT_KETENTUAN}  //a[contains(text(),'Syarat & Ketentuan')]
+${LOGO}  //nav[@class='v-toolbar elevation-0 v-toolbar--fixed theme--light blanja-catalog-toolbar blanja-navbar blanja-navbar-xs-only']//div[@class='v-toolbar__title']
+${KEBIJAKAN}  //a[contains(text(),'Kebijakan Privasi')]
+${FAQ}  //a[contains(text(),'FAQ (Bantuan)')]
+${REGISTRASI}  //a[contains(text(),'Registrasi Suplier')]
+${PANDUAN}  //div[@class='flex xs12 md9']//div[2]
+${PENGGUNA_BARU}  //a[contains(text(),'Pengguna Baru')]
+${BERTRANSAKSI}  //a[contains(text(),'Bertransaksi')]
+${METODE_BAYAR}  //a[contains(text(),'Metode Pembayaran')]
+${LAYANAN}  //div[@class='layout blanja-footer row wrap']//div[3]
+${FIELD_USERNAME}  //div[@id='email']//input
+${FIELD_PASSWORD}  //div[@id='password']//input
+${BUTTON_LOGIN1}  //main[@class='v-content bg-content']//div[4]
+${FIELD_PENCARIAN}  //input[@name='bbSearch']
+${WORDING_INFORMASI}  //h3[contains(text(),'Hasil Pencarian')]
+${ICON_NOTFOUND}  //div[@class='flex product-not-found mt-4 xs12']//img
+${WORDING_NOTFOUND}  //body//p[1]
+${BUTTON_PENCARIAN}  //button[@class='bb-btn-red text-600 v-btn theme--light']
+
+
+*** Keywords ***
+Klik Tombol Login
+  Wait Until Element Is Visible  ${BUTTON_LOGIN}
+  Element Should Be Visible  ${BUTTON_LOGIN}
+  Click Element  ${BUTTON_LOGIN}
+
+Tampilan Wording masuk
+  Wait Until Element Is Visible  ${WORDING_MASUK}
+  Element Should Be Visible  ${WORDING_MASUK}
+
+Tampilan Info Bagian Bawah
+  Mouse Down  ${INFO_BISNISBLANJA}
+  Wait Until Element Is Visible  ${INFO_BISNISBLANJA}
+  Element Should Be Visible  ${INFO_BISNISBLANJA}
+  Element Should Be Enabled  ${INFO_BISNISBLANJA}
+  Mouse Down  ${SYARAT_KETENTUAN}
+  Click Element  ${SYARAT_KETENTUAN}
+  Click Element  ${LOGO}
+  Mouse Down  ${KEBIJAKAN}
+  Click Element  ${KEBIJAKAN}
+  Click Element  ${LOGO}
+  Mouse Down  ${FAQ}
+  Click Element  ${FAQ}
+  Click Element  ${LOGO}
+  Mouse Down  ${REGISTRASI}
+  Element Should Be Visible  ${REGISTRASI}
+  Element Should Be Enabled  ${REGISTRASI}
+
+Tampilan Panduan Pelanggan
+  Mouse Down  ${PANDUAN}
+  Wait Until Element Is Visible  ${PANDUAN}
+  Element Should Be Visible  ${PANDUAN}
+  Element Should Be Enabled  ${PANDUAN}
+  Element Should Be Visible  ${PENGGUNA_BARU}
+  Element Should Be Enabled  ${PENGGUNA_BARU}
+  Element Should Be Visible  ${BERTRANSAKSI}
+  Element Should Be Enabled  ${BERTRANSAKSI}
+  Click Element  ${METODE_BAYAR}
+  Click Element  ${LOGO}
+
+Tampilan Layanan Pelanggan
+  Mouse Down  ${LAYANAN}
+  Wait Until Element Is Visible  ${LAYANAN}
+  Element Should Be Visible  ${LAYANAN}
+  Element Should Be Enabled  ${LAYANAN}
+
+Input Username
+  [Arguments]  ${USERNAME}
+  Wait Until Element Is Visible  ${FIELD_USERNAME}
+  Element Should Be Visible  ${FIELD_USERNAME}
+  Click Element  ${FIELD_USERNAME}
+  Input Text  ${FIELD_USERNAME}  ${USERNAME}
+
+Input Password
+  [Arguments]  ${PASSWORD}
+  Wait Until Element Is Visible  ${FIELD_PASSWORD}
+  Element Should Be Visible  ${FIELD_PASSWORD}
+  Click Element  ${FIELD_PASSWORD}
+  Input Text  ${FIELD_PASSWORD}  ${PASSWORD}
+
+Klik Login2
+  Wait Until Element Is Visible  ${BUTTON_LOGIN1}
+  Element Should Be Visible  ${BUTTON_LOGIN1}
+  Click Element  ${BUTTON_LOGIN1}
+
+Input Keyword Pencarian
+  [Arguments]  ${KEYWORD}
+  Wait Until Element Is Visible  ${FIELD_PENCARIAN}
+  Element Should Be Visible  ${FIELD_PENCARIAN}
+  Click Element  ${FIELD_PENCARIAN}
+  Input Text  ${FIELD_PENCARIAN}  ${KEYWORD}
+
+Klik Enter
+  Press Keys  ${FIELD_PENCARIAN}  ENTER
+
+Masuk dan Tampilan Wording Halaman Hasil Pencarian
+  Wait Until Element Is Visible  ${WORDING_INFORMASI}
+  Element Should Be Visible  ${WORDING_INFORMASI}
+
+Wording dan Ikon Pencarian Tidak Ditemukan
+  Wait Until Element Is Visible  ${ICON_NOTFOUND}
+  Element Should Be Visible  ${ICON_NOTFOUND}
+  Wait Until Element Is Visible  ${WORDING_NOTFOUND}
+  Element Should Be Visible  ${WORDING_NOTFOUND}
+
+Klik Button Pencarian Ulang
+  Wait Until Element Is Visible  ${BUTTON_PENCARIAN}
+  Element Should Be Visible  ${BUTTON_PENCARIAN}
+  Click Element  ${BUTTON_PENCARIAN}
+
+Tampilan Kembali Ke Kolom Pencarian
+  Wait Until Element Is Visible  ${FIELD_PENCARIAN}
+  Element Should Be Visible  ${FIELD_PENCARIAN}
+
+*** Test Cases ***
+Page Search Result
+  Set Selenium Speed  0.5s
+  Open Browser  urlbelanjaaaa  chrome
+  Tampilan Info Bagian Bawah
+  Tampilan Layanan Pelanggan
+  Tampilan Panduan Pelanggan
+  Klik Tombol Login
+  Tampilan Wording masuk
+  Input Username  aisyanazi@gmail.com
+  Input Password  secret
+  Klik Login2
+  Input Keyword Pencarian  bola
+  Klik Enter
+  Masuk dan Tampilan Wording Halaman Hasil Pencarian
+  Wording dan Ikon Pencarian Tidak Ditemukan
+  Klik Button Pencarian Ulang
+  Tampilan Kembali Ke Kolom Pencarian
